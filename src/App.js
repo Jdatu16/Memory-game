@@ -1,46 +1,74 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GameContent } from "./components/GameContent";
 import { Header } from "./components/Header";
-
-const cardImages = [
-  { className: "fas fa-dragon front" },
-  { className: "fas fa-crow front" },
-  { className: "fas fa-dog front" },
-  { className: "fas fa-dove front" },
-  { className: "fas fa-cat front" },
-  { className: "fas fa-horse front" },
-];
+import { cardImages } from "./constants/cardImagesSmall";
 
 function App() {
   const [cards, setCards] = useState([]);
   const [turns, setTurns] = useState(0);
-  const [firstClick, setFirstClick] = useState(null);
-  const [secondClick, setSecondClick] = useState(null);
+  const [firstCard, setFirstCard] = useState(null);
+  const [secondCard, setSecondCard] = useState(null);
+  const [disabled, setDisabled] = useState(false);
 
   // shuffle
   const shuffleCards = () => {
     const shuffledCards = [...cardImages, ...cardImages]
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random() }));
+
+    setFirstCard(null);
+    setSecondCard(null);
     setCards(shuffledCards);
     setTurns(+0);
   };
-  console.log(turns, cards);
 
   // comparing cards
+  const resetTurn = () => {
+    setFirstCard(null);
+    setSecondCard(null);
+    setTurns((TurnCounter) => TurnCounter + 1);
+    setDisabled(false);
+  };
+
+  useEffect(() => {
+    const compareCards = () => {
+      if (firstCard && secondCard) {
+        setDisabled(true);
+        if (firstCard.className == secondCard.className) {
+          setCards((prevCards) => {
+            return prevCards.map((card) => {
+              if (card.className === firstCard.className) {
+                return { ...card, matched: true };
+              } else {
+                return card;
+              }
+            });
+          });
+          resetTurn();
+        } else {
+          console.log("did not match");
+          setTimeout(() => resetTurn(), 1000);
+        }
+      }
+    };
+    compareCards();
+  }, [firstCard, secondCard]);
 
   const handleChoice = (card) => {
-    console.log(card);
+    firstCard ? setSecondCard(card) : setFirstCard(card);
   };
 
   return (
     <div className="main-container">
       <Header shuffleCards={shuffleCards} />
-      <div className="grid-container">
-        {cards.map((card) => (
-          <GameContent key={card.id} card={card} handleChoice={handleChoice} />
-        ))}
-      </div>
+      <GameContent
+        cards={cards}
+        handleChoice={handleChoice}
+        firstCard={firstCard}
+        secondCard={secondCard}
+        disabled={disabled}
+      />
+      <p className="turn-counter">Turns: {turns}</p>
     </div>
   );
 }

@@ -43,7 +43,7 @@ body {
   align-items: center;
   margin-right: 100px;
 }
-/* buttons */
+/* header > buttons */
 .btn {
   font-weight: bold;
   border: none;
@@ -68,14 +68,14 @@ body {
   transition: linear 0.3s;
 }
 .restart-button:hover {
-  cursor: pointer;
+  cursor: not-allowed;
   color: rgb(248, 161, 23);
   background-color: rgba(248, 232, 205, 0.541);
 }
 
 /* game content */
 .grid-container {
-  margin-top: 50px;
+  margin-top: 100px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
@@ -86,18 +86,48 @@ body {
   padding: 15px;
   width: 50px;
   height: 50px;
-  background-color: var(--clr-tertiary);
+  background-color: orange;
   color: var(--clr-primary);
   border-radius: 50%;
 }
 .back {
-  width: 80px;
-  height: 80px;
   font-size: 40px;
+  padding: 15px;
+  width: 50px;
+  height: 50px;
   background-color: var(--clr-secondary);
   color: var(--clr-primary);
   border-radius: 50%;
 }
 .back:hover {
   cursor: pointer;
+}
+
+/* comparing animation */
+.matched {
+  background-color: var(--clr-tertiary);
+}
+
+.front {
+  transform: rotateY(90deg);
+  transition: all ease-in 0.2s;
+  position: absolute;
+}
+.flipped .front {
+  transform: rotateY(0deg);
+  transition-delay: 0.2s;
+}
+
+.back {
+  transition: all ease-in 0.2s;
+  transition-delay: 0s;
+}
+.flipped .back {
+  transform: rotateY(90deg);
+  transition-delay: 0;
+}
+
+/* turn Counter */
+.turn-counter {
+  margin-top: 30px;
 }
