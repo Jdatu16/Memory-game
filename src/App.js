@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { GameContent } from "./components/GameContent";
-import { Header } from "./components/Header";
-import { cardImages } from "./constants/cardImagesSmall";
+import { GameContent, Header } from "./components";
+import { NewGame } from "./components/modals";
+import { Rules } from "./components/Rules";
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -10,13 +10,15 @@ function App() {
   const [secondCard, setSecondCard] = useState(null);
   const [disabled, setDisabled] = useState(false);
   const [hidden, setHidden] = useState(true);
-
+  const [showModal, setShowModal] = useState(false);
+  const [cardImages, setCardImages] = useState([]);
+  const [gameTheme, setGameTheme] = useState("");
+  const [gridSize, setGridSize] = useState("");
   // shuffle
   const shuffleCards = () => {
     const shuffledCards = [...cardImages, ...cardImages]
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random() }));
-    setHidden(false);
     setFirstCard(null);
     setSecondCard(null);
     setCards(shuffledCards);
@@ -61,7 +63,26 @@ function App() {
 
   return (
     <div className="main-container">
-      <Header shuffleCards={shuffleCards} />
+      <Header
+        setShowModal={setShowModal}
+        setGridSize={setGridSize}
+        setGameTheme={setGameTheme}
+        shuffleCards={shuffleCards}
+        hidden={hidden}
+      />
+      <Rules hidden={hidden} />
+      <NewGame
+        setGridSize={setGridSize}
+        gridSize={gridSize}
+        setGameTheme={setGameTheme}
+        gameTheme={gameTheme}
+        setCardImages={setCardImages}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        shuffleCards={shuffleCards}
+        cardImages={cardImages}
+        setHidden={setHidden}
+      />
       <GameContent
         cards={cards}
         handleChoice={handleChoice}
