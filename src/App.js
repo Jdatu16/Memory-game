@@ -9,13 +9,14 @@ function App() {
   const [firstCard, setFirstCard] = useState(null);
   const [secondCard, setSecondCard] = useState(null);
   const [disabled, setDisabled] = useState(false);
+  const [hidden, setHidden] = useState(true);
 
   // shuffle
   const shuffleCards = () => {
     const shuffledCards = [...cardImages, ...cardImages]
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random() }));
-
+    setHidden(false);
     setFirstCard(null);
     setSecondCard(null);
     setCards(shuffledCards);
@@ -68,7 +69,9 @@ function App() {
         secondCard={secondCard}
         disabled={disabled}
       />
-      <p className="turn-counter">Turns: {turns}</p>
+      <p className={hidden ? "hidden-turn-counter" : "turn-counter"}>
+        Turns: {turns}
+      </p>
     </div>
   );
 }

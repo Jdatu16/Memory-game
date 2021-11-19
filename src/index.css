@@ -26,11 +26,12 @@ body {
 }
 /* header */
 .header {
-  margin-top: 30px;
+  height: 100px;
   width: 100vw;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 
 .title {
@@ -130,4 +131,41 @@ body {
 /* turn Counter */
 .turn-counter {
   margin-top: 30px;
+}
+
+.hidden-turn-counter {
+  display: none;
+}
+
+/* responsive */
+
+@media (max-width: 600px) {
+  .buttons {
+    margin-right: 5vw;
+  }
+
+  .title {
+    margin-left: 5vw;
+  }
+}
+
+@media (max-width: 470px) {
+  .buttons {
+    flex-direction: column;
+  }
+  .restart-button {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 410px) {
+  .grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 290px) {
+  .grid-container {
+    gap: 10px;
+  }
 }
