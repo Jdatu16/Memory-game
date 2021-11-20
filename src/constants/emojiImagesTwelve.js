@@ -1,4 +1,4 @@
-export const emojiImagesLarge = [
+export const emojiImagesTwelve = [
   { className: "fas fa-angry front", matched: false },
   { className: "fas fa-grin front", matched: false },
   { className: "fas fa-smile front", matched: false },

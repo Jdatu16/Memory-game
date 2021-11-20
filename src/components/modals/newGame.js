@@ -4,8 +4,10 @@ import Modal from "react-modal";
 import {
   cardImagesEight,
   cardImagesTwelve,
-  emojiImagesLarge,
-  emojiImagesSmall,
+  cardImagesSixteen,
+  emojiImagesTwelve,
+  emojiImagesEight,
+  emojiImagesSixteen,
 } from "../../constants";
 
 import "../../css/modal.css";
@@ -30,12 +32,16 @@ export const NewGame = ({
         setCardImages(cardImagesTwelve);
       } else if (gridSize === "8") {
         setCardImages(cardImagesEight);
+      } else if (gridSize === "16") {
+        setCardImages(cardImagesSixteen);
       }
     } else if (gameTheme === "emoji") {
       if (gridSize === "12") {
-        setCardImages(emojiImagesLarge);
+        setCardImages(emojiImagesTwelve);
       } else if (gridSize === "8") {
-        setCardImages(emojiImagesSmall);
+        setCardImages(emojiImagesEight);
+      } else if (gridSize === "16") {
+        setCardImages(emojiImagesSixteen);
       }
     }
     setHidden(false);
@@ -125,6 +131,19 @@ export const NewGame = ({
                 }
               >
                 12
+              </button>
+              <button
+                onClick={() => {
+                  setGridSize("16");
+                }}
+                type="button"
+                className={
+                  gridSize === "16"
+                    ? "theme-btn theme-btn-checked"
+                    : "theme-btn"
+                }
+              >
+                16
               </button>
             </div>
           </div>
